@@ -140,7 +140,7 @@ days和category将在脚本中能获取到，脚本使用参见下面<a href="#s
 
 - **设置节点连线文字:** 
 
-![节点连线](http://101.43.138.169/wfhtml/pages/imgs/transition.png)
+<img src="http://101.43.138.169/wfhtml/pages/imgs/transition.png" width="800px"/>
 
 - **设置任务节点:** 
 
