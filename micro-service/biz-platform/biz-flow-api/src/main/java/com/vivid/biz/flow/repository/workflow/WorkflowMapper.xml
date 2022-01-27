@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.vivid.biz.flow.repository.workflow.WorkflowMapper" >
+    <select id="getOrderHistory" resultType="com.vivid.biz.flow.dto.flow.WorkItemDto">
+        select o.id as order_id,o.process_id,o.order_state,o.priority,o.creator,o.create_time,o.end_time,
+        o.parent_id,o.expire_time,o.order_no,o.variable,p.name as process_name, p.display_name as process_display_name,
+        p.instance_url,o.create_time as order_create_time from wf_hist_order o
+        left join wf_process p on p.id = o.process_id
+        <where>
+        <if test="query.operators !=null and query.operators.length>0">
+            and o.creator in
+            <foreach collection="query.operators" item="id" index="index" open="(" close=")" separator=",">
+                #{id}
+            </foreach>
+        </if>
+            <if test="query.processId !=null and query.processId != ''">
+                and o.process_id = #{query.processId}
+            </if>
+            <if test="query.orderNo !=null and query.orderNo != ''">
+                and o.order_no = #{query.orderNo}
+            </if>
+            <if test="query.orderId !=null and query.orderId != ''">
+                and o.id = #{query.orderId}
+            </if>
+        </where>
+         order by o.create_time desc
+    </select>
+    <select id="getWorkItems" resultType="com.vivid.biz.flow.dto.flow.WorkItemDto">
+        select distinct o.process_id, t.order_id, t.id as id, t.id as task_id, p.name as process_name, p.display_name as process_display_name, p.instance_url, o.parent_id, o.creator,
+        o.create_time as order_create_time, o.expire_time as order_expire_time, o.order_No, o.variable as order_variable,
+        t.display_name as task_name, t.task_name as task_key, t.task_type, t.perform_type, t.operator, t.action_url, t.parent_task_id,
+        t.create_time as task_create_time, t.finish_time as task_end_time, t.expire_time as task_expire_time, t.variable as task_variable
+        from wf_task t
+        left join wf_order o on t.order_id = o.id
+        left join wf_task_actor ta on ta.task_id=t.id
+        left join wf_process p on p.id = o.process_id
+        <where>
+            <if test="query.operators !=null and query.operators.length>0">
+                and ta.actor_id in
+                <foreach collection="query.operators" item="id" index="index" open="(" close=")" separator=",">
+                    #{id}
+                </foreach>
+            </if>
+            <if test="query.taskId !=null and query.taskId != ''">
+                and t.id = #{query.taskId}
+            </if>
+            <if test="query.processId !=null and query.processId != ''">
+                and o.process_id = #{query.processId}
+            </if>
+            <if test="query.orderId !=null and query.orderId != ''">
+                and t.order_id = #{query.orderId}
+            </if>
+            <if test="query.orderNo !=null and query.orderNo != ''">
+                and t.order_no = #{query.orderNo}
+            </if>
+            <if test="query.taskCreateTimeStart !=null and query.taskCreateTimeStart != ''">
+                <![CDATA[
+                and t.create_time >= #{query.taskCreateTimeStart}
+                ]]>
+            </if>
+            <if test="query.taskCreateTimeEnd !=null and query.taskCreateTimeEnd != ''">
+                <![CDATA[
+                and t.create_time <= #{query.taskCreateTimeEnd}
+                ]]>
+            </if>
+        </where>
+         order by t.create_time desc
+    </select>
+    <select id="getWorkItemHistoryPage" resultType="com.vivid.biz.flow.dto.flow.WorkItemDto">
+        select distinct o.process_id, t.order_id, t.id as id, t.id as task_id, p.name as process_name, p.display_name as process_display_name, p.instance_url, o.parent_id, o.creator,
+        o.create_time as order_create_time, o.expire_time as order_expire_time, o.order_no, o.variable as order_variable,
+        t.display_name as task_name, t.task_name as task_key, t.task_type, t.perform_type,t.operator, t.action_url,
+        t.create_time as task_create_time, t.finish_time as task_end_time, t.expire_time as task_expire_time, t.variable as task_variable
+        from wf_hist_task t
+        left join wf_hist_order o on t.order_id = o.id
+        left join wf_hist_task_actor ta on ta.task_id=t.id
+        left join wf_process p on p.id = o.process_id
+        <where>
+            <if test="query.operators !=null and query.operators.length>0">
+                and ta.actor_id in
+                <foreach collection="query.operators" item="id" index="index" open="(" close=")" separator=",">
+                    #{id}
+                </foreach>
+            </if>
+            <if test="query.processId !=null and query.processId != ''">
+                and o.process_id = #{query.processId}
+            </if>
+            <!--<if test="query.displayName !=null and query.displayName != ''">-->
+                <!--and p.display_name like concat('%',#{query.displayName},'%')-->
+            <!--</if>-->
+            <if test="query.parentId !=null and query.parentId != ''">
+                and o.parent_id = #{query.parentId}
+            </if>
+            <if test="query.orderId !=null and query.orderId != ''">
+                and t.order_id = #{query.orderId}
+            </if>
+            <if test="query.orderNo !=null and query.orderNo != ''">
+                and t.order_no = #{query.orderNo}
+            </if>
+            <!--<if test="query.taskName !=null and query.taskName.length>0">-->
+                <!--and t.task_name in-->
+                <!--<foreach collection="query.taskName" item="name" index="index" open="(" close=")" separator=",">-->
+                    <!--#{name}-->
+                <!--</foreach>-->
+            <!--</if>-->
+            <if test="query.taskType !=null and query.taskType != ''">
+                and t.task_type = #{query.taskType}
+            </if>
+            <if test="query.performType !=null and query.performType != ''">
+                and t.perform_type = #{query.performType}
+            </if>
+            <if test="query.taskCreateTimeStart !=null and query.taskCreateTimeStart != ''">
+                and t.create_time >= #{query.taskCreateTimeStart}
+            </if>
+            <if test="query.taskCreateTimeEnd !=null and query.taskCreateTimeEnd != ''">
+                <![CDATA[
+                and t.create_time <= #{query.taskCreateTimeEnd}
+                ]]>
+            </if>
+        </where>
+         order by t.create_time desc
+    </select>
+</mapper>

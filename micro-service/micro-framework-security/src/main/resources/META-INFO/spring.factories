@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.vivid.framework.security.config.SecurityConfiguration,\
+com.vivid.framework.security.filter.ResourceClientConfiguration

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <!--日志外部配置文件参数设置http://stackoverflow.com/questions/29429073/spring-boot-logback-and-logging-config-property-->
+    <!--定义日志文件的存储地址 勿在 LogBack 的配置中使用相对路径-->
+    <property name="LOG_HOME" value="/home/vivid/logs/flowapi/" />
+
+    <!-- %m输出的信息,%p日志级别,%t线程名,%d日期,%c类的全名,,,, -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>%d %p (%file:%line\)- %m%n</pattern>
+        </encoder>
+    </appender>
+    <appender name="VIVID_LOG"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>${LOG_HOME}back.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_HOME}webback.%d{yyyy-MM-dd}.log</fileNamePattern>
+        </rollingPolicy>
+        <encoder>
+            <pattern>
+                %d,%m%n
+            </pattern>
+        </encoder>
+    </appender>
+
+    <!--
+       logger主要用于存放日志对象，也可以定义日志类型、级别
+       name：表示匹配的logger类型前缀，也就是包的前半部分
+       level：要记录的日志级别，包括 TRACE < DEBUG < INFO < WARN < ERROR
+       additivity：作用在于children-logger是否使用 rootLogger配置的appender进行输出，
+       false：表示只用当前logger的appender-ref，true：
+       表示当前logger的appender-ref和rootLogger的appender-ref都有效
+   -->
+
+    <!-- Spring framework logger -->
+    <logger name="org.springframework" level="ERROR" additivity="false"></logger>  <!--生产环境改成ERROR-->
+    <logger name="com.netflix" level="ERROR"></logger>  <!--生产环境改成ERROR-->
+
+    <!--业务 日志-->
+    <logger name="com.vivid" level="INFO" />
+
+    <!--
+    root与logger是父子关系，没有特别定义则默认为root，任何一个类只会和一个logger对应，
+    要么是定义的logger，要么是root，判断的关键在于找到这个logger，然后判断这个logger的appender和level。
+    -->
+    <!--开启会打印框架日志-->
+    <root level="INFO">
+        <appender-ref ref="STDOUT" />
+        <appender-ref ref="VIVID_LOG" />
+    </root>
+
+
+    <!-- 如果多个使用逗号隔开.
+    <springProfile name="product">
+        <logger name="com.cyou" level="INFO">
+            <appender-ref ref="VIVID_LOG" />
+        </logger>
+    </springProfile>
+
+    <springProfile name="test">
+        <logger name="com.cyou" level="INFO">
+            <appender-ref ref="STDOUT" />
+        </logger>
+    </springProfile> -->
+</configuration>

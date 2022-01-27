@@ -1,0 +1,4 @@
+#配置自定义Starter的自动化配置
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.vivid.framework.privilege.FramePrivilegeConfiguration,\
+org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration
