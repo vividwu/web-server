@@ -114,7 +114,7 @@ days和category将在脚本中能获取到，脚本使用参见下面<a href="#s
 
 **表单设计器可以绑定模型，布局控件排版**
 
-![表单](http://101.43.138.169/wfhtml/pages/imgs/form.png)
+![表单](https://github.com/vividwu/web-html/blob/master/pages/imgs/form.png)
 
 *点击左侧控件，中间设计面板可以调整布局（为了保证表单样式统一，布局前先放入卡片控件，除了表格其他子控件放入其中）
 
@@ -122,11 +122,11 @@ days和category将在脚本中能获取到，脚本使用参见下面<a href="#s
 
 *设计完成点击“保存”
 
-![控件](http://101.43.138.169/wfhtml/pages/imgs/controls.png)
+![控件](https://github.com/vividwu/web-html/blob/master/pages/imgs/controls.png)
 
 *默认自带基础控件，按照开发规则可拓展自定义控件
 
-![属性](http://101.43.138.169/wfhtml/pages/imgs/properties.png)
+![属性](https://github.com/vividwu/web-html/blob/master/pages/imgs/properties.png)
 
 *属性面板配置控件绑定模型、数据源、栅格等
 
@@ -134,31 +134,31 @@ days和category将在脚本中能获取到，脚本使用参见下面<a href="#s
 
 **流程设计器可以灵活配置流转和节点审批人**
 
-![流程图](http://101.43.138.169/wfhtml/pages/imgs/flow_design.png)
+![流程图](https://github.com/vividwu/web-html/blob/master/pages/imgs/flow_design.png)
 
 *拖入开始、结束节点，设置提交节点；配置任务和路由节点属性和脚本；*
 
 - **设置节点连线文字:** 
 
-<img src="http://101.43.138.169/wfhtml/pages/imgs/transition.png" width="800px"/>
+<img src="https://github.com/vividwu/web-html/blob/master/pages/imgs/transition.png" width="800px"/>
 
 - **设置任务节点:** 
 
-![任务节点](http://101.43.138.169/wfhtml/pages/imgs/task.png)
+![任务节点](https://github.com/vividwu/web-html/blob/master/pages/imgs/task.png)
 
 *可设置关联的表单、返回候选人的脚本、审批的类型*
 
 - **编写任务节点候选人脚本:** 
 
-![任务节点候选人脚本](imgs/task_script.png)
+![任务节点候选人脚本](https://github.com/vividwu/web-html/blob/master/pages/imgs/task_script.png)
 
 - **设置路由节点:** 
 
-![路由节点](http://101.43.138.169/wfhtml/pages/imgs/decision.png)
+![路由节点](https://github.com/vividwu/web-html/blob/master/pages/imgs/decision.png)
 
 *可设置路由跳转的脚本返回任务节点 - 指定的taskId*
 
-![路由节点候选人脚本](http://101.43.138.169/wfhtml/pages/imgs/decision_script.png)
+![路由节点候选人脚本](https://github.com/vividwu/web-html/blob/master/pages/imgs/decision_script.png)
 
 ### <a id="script">动态脚本</a>
 #### <a id="script_desc">脚本简介</a>
